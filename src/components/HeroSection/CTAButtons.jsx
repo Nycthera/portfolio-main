@@ -13,8 +13,6 @@ const CTAButtons = () => {
           <LearnMoreButton />
         </Link>
 
-        {/* Contact Me button */}
-        <ContactMe />
       </div>
     </div>
   );
