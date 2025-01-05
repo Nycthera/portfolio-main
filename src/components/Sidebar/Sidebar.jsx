@@ -21,15 +21,7 @@ const Sidebar = () => {
         isCollapsed ? "w-16" : "w-64"
       }`}
     >
-      {/* Toggle Button */}
-      <button
-        onClick={toggleSidebar}
-        className={`absolute top-4 right-[-12px] transform bg-purple-500 text-white p-1 rounded-full focus:outline-none hover:bg-purple-700 transition-transform duration-300 ${
-          isCollapsed ? "translate-x-6" : "translate-x-0"
-        }`}
-      >
-        {isCollapsed ? "→" : "←"}
-      </button>
+     
 
       {/* Menu Items */}
       <ul className="space-y-4 p-5">
