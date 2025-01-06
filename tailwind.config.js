@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{html,js,jsx,ts,tsx}', // Make sure Tailwind knows about your JSX files
+    './src/**/*.{html,js,jsx,ts,tsx}', // Ensure Tailwind scans your JSX files
   ],
   theme: {
     extend: {
@@ -14,6 +14,9 @@ export default {
         'slide-left': 'slideLeft 1s ease-out forwards',
         'pulse-slow': 'pulse-slow 5s infinite',
         'pulse-fast': 'pulse-fast 3s infinite',
+      },
+      colors: {
+        lightpink: 'f0416f'
       },
       keyframes: {
         fadeUp: {
@@ -47,9 +50,26 @@ export default {
         'pulse-fast': {
           '0%, 100%': { opacity: 0.6, transform: 'scale(1)' },
           '50%': { opacity: 0.8, transform: 'scale(1.1)' },
-        }
+        },
+      },
+      dropShadow: {
+        'glow': '0 0 8px rgba(255, 255, 255, 0.8)', // Glow effect for hover
+      },
+      transformOrigin: {
+        'center': 'center',
+      },
+      transitionTimingFunction: {
+        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.icon': {
+          '@apply text-6xl transition-transform duration-300 transform hover:scale-125 hover:drop-shadow-glow': {},
+        },
+      });
+    },
+  ],
 };

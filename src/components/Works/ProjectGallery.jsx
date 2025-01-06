@@ -30,7 +30,7 @@ const projects = [
     repoLink: "https://github.com/dabby12/react-native-note-app",  // Link to the GitHub repository
   },
   {
-    title: "portfolio version 3.2",
+    title: "Portfolio version 3.2",
     description: "A personal portfolio built with React and Tailwind CSS. (Note: this portfolio is built based of it)",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
     projectLink: "https://portfolio-ver-3-2.vercel.app/",  // Link to the deployed project
