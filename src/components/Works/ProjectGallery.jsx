@@ -24,21 +24,21 @@ const projects = [
   },
   {
     title: "Mobile note-taking app",
-    description: "A mobile note-taking app that allows users to create, edit, and delete notes. (Note: this project is kinda broken)",
+    description: "A mobile note-taking app that allows users to create, edit, and delete notes. ",
     techStack: ["React Native", "Expo", "AsyncStorage"],
     projectLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",  // Link to the deployed project
     repoLink: "https://github.com/dabby12/react-native-note-app",  // Link to the GitHub repository
   },
   {
     title: "Portfolio version 3.2",
-    description: "A personal portfolio built with React and Tailwind CSS. (Note: this portfolio is built based of it)",
+    description: "A personal portfolio built with React and Tailwind CSS. ",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
     projectLink: "https://portfolio-ver-3-2.vercel.app/",  // Link to the deployed project
     repoLink: "https://github.com/dabby12/portfolio-ver-3.2"
   },
   {
     title: "AI Chatbot website",
-    description: "A website with an AI chatbot that answers questions and provides information. (Note: this project is kinda broken and is not deployed yet)",
+    description: "A website with an AI chatbot that answers questions and provides information. (Note: this project is not deployed yet)",
     techStack: ["React", "Node.js", "Gemini API", "Tailwind CSS", "JavaScript"],
     projectLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",  // Link to the deployed project
     repoLink: "https://github.com/dabby12/react-gemini"

@@ -1,9 +1,8 @@
 import React from "react";
 
-import Introduction from "./Introduction";
-
+import Introduction from "./Introduction"
 import Skills from "./Skills";
-
+import CustomAboutMe from "./CustomAboutMe";
 const About = () => {
   return (
     <div className="flex h-screen overflow-hidden">
@@ -21,7 +20,7 @@ const About = () => {
 
         {/* Skills Section */}
         <Skills />
-
+        <CustomAboutMe />
       </div>
     </div>
   );

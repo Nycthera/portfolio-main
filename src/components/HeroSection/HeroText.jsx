@@ -11,8 +11,11 @@ const HeroText = () => {
       </h2>
       <p className="text-xl text-black-100 animate-fade-up animation-delay-400">
       
-I'm a passionate problem-solver who loves to create innovative and intuitive web experiences.
+I'm a passionate problem-solver who loves to create innovative and intuitive web experiences. I specialize in building modern, responsive websites and web applications. I'm always looking to learn new technologies and improve my skills.
+
       </p>
+      
+        
     </div>
   );
 };

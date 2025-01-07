@@ -16,7 +16,7 @@ export default {
         'pulse-fast': 'pulse-fast 3s infinite',
       },
       colors: {
-        lightpink: 'f0416f'
+        'lightpink': 'f0416f'
       },
       keyframes: {
         fadeUp: {
