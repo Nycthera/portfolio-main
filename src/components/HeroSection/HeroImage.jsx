@@ -3,7 +3,7 @@ import FoxImage from "../../assets/fox-image.jpg";
 
 const HeroImage = () => {
   return (
-    <div className="hidden lg:block w-128 h-64 lg:w-128 lg:h-128 rounded-full overflow-hidden shadow-lg">
+    <div className="hidden lg:block w-128 h-64 lg:w-128 lg:h-64 rounded-full overflow-hidden shadow-lg">
       <img
         src={FoxImage}
         alt="Fox Hero"
