@@ -43,8 +43,8 @@ const projects = [
     description:
       "A website with an AI chatbot that answers questions and provides information. ",
     techStack: ["React", "Node.js", "Gemini API", "Tailwind CSS", "JavaScript"],
-    projectLink: "", // Link to the deployed project
-    repoLink: "https://github.com/dabby12/react-gemini",
+    projectLink: "https://ai-chatbot-pi-silk.vercel.app", // Link to the deployed project
+    repoLink: "https://github.com/dabby12/AI-Chatbot",
   },
   {
     title: "Gradient colour picker",
