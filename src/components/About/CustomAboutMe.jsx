@@ -16,7 +16,6 @@ function CustomAboutMe() {
           <li>I can solve a Rubik's Cube in under 2 minutes!</li>
           <li>I'm fluent in coding languages like JavaScript and Python.</li>
           <li>I've built several projects using React, Vite, and Tailwind, including websites, apps, and games.</li>
-          <li>I love experimenting with new recipes and trying out different cuisines in my free time.</li>
           <li>I aspire to one day work on space exploration technologies or AI development.</li>
         </ul>
       </div>
