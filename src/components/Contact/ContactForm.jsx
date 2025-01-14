@@ -1,50 +1,23 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-
-// Google reCAPTCHA Site Key
-const SITE_KEY = '6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN'; // Your reCAPTCHA v3 Site Key
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
-  const [recaptchaToken, setRecaptchaToken] = useState(null); // Store reCAPTCHA token
 
   const ServiceID = "service_7fsl6pc";
   const TemplateID = "template_n3875p2";
   const PublicKey = "NlVboxl_2X5mr9bm1";
 
-  useEffect(() => {
-    // Load the reCAPTCHA script on component mount
-    const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`;
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      // Execute reCAPTCHA after the script is loaded
-      window.grecaptcha.ready(() => {
-        window.grecaptcha.execute(SITE_KEY, { action: 'submit' }).then((token) => {
-          setRecaptchaToken(token); // Set the token received from reCAPTCHA
-        });
-      });
-    };
-  }, []);
-
   const sendEmail = (e) => {
     e.preventDefault();
-
-    if (!recaptchaToken) {
-      setStatus('Please complete the reCAPTCHA.');
-      return;
-    }
 
     emailjs
       .sendForm(
         ServiceID, // Your EmailJS Service ID
         TemplateID, // Your EmailJS Template ID
         form.current, // Form reference
-        PublicKey, // Your EmailJS Public Key
-        { 'g-recaptcha-response': recaptchaToken } // Add reCAPTCHA token
+        PublicKey // Your EmailJS Public Key
       )
       .then(
         () => {
