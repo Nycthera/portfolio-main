@@ -8,6 +8,7 @@ import Contact from "./components/Contact/Contact";
 import Works from "./components/Works/Works";
 import SolarSystemSpinner from "./components/SolarSystemSpinner"; // Import the solar system spinner
 
+
 const App = () => {
   const [loading, setLoading] = useState(true);
 
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/projects" element={<Works />} />
+              
             </Routes>
           </div>
         </div>
@@ -40,4 +42,5 @@ const App = () => {
 };
 
 console.warn("Made by Chris Liu with ❤️, 2024-25");
+console.log("Credits: \nDesign: Chris Liu\nIcons: React Icons\nFox picture: Google Images\nIf you have any questions, my email: notexttospeachfmsp@gmail.com")
 export default App;

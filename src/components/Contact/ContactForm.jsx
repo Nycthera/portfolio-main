@@ -1,44 +1,49 @@
-import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
-import SendMessage from '../SpecialComponents/SendMessage'
-const ContactForm = () => {
-  // State hooks to manage form input and status messages
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState(''); // Feedback message for the user
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+const ContactForm = () => {
+  const form = useRef(); // Ref for the form element
+  const [status, setStatus] = useState(''); // Feedback message for the user
+  const ServiceID = "service_7fsl6pc";
+  const TemplateID = "template_n3875p2";
+  const PublicKey = "NlVboxl_2X5mr9bm1";
+  const [recaptchaToken, setRecaptchaToken] = useState(''); // State to store the reCAPTCHA token
+
+  const handleRecaptchaVerify = async () => {
+    try {
+      const recaptcha = await window.grecaptcha.execute("YOUR_SITE_KEY", { action: "submit" });
+      setRecaptchaToken(recaptcha);
+    } catch (error) {
+      console.error('Error executing reCAPTCHA:', error);
+      setStatus('Failed to verify reCAPTCHA. Please try again.');
+    }
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
 
-    const { name, email, message } = formData;
-
-    // Validate form inputs
-    if (!name || !email || !message) {
-      setStatus('All fields are required.');
+    // Ensure reCAPTCHA token exists
+    if (!recaptchaToken) {
+      setStatus('Please complete the reCAPTCHA verification.');
       return;
     }
 
-    // Send form data using EmailJS
+    // Append reCAPTCHA token to form data
+    const formData = new FormData(form.current);
+    formData.append('recaptcha_token', recaptchaToken);
+
     emailjs
-      .sendForm(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-        e.target,
-        process.env.REACT_APP_EMAILJS_USER_ID
-      )
+      .sendForm(ServiceID, TemplateID, form.current, PublicKey)
       .then(
         () => {
           setStatus('Your message has been sent successfully!');
-          setFormData({ name: '', email: '', message: '' });
+          form.current.reset(); // Clear the form fields
+          setRecaptchaToken(''); // Reset reCAPTCHA token
         },
-        () => {
+        (error) => {
           setStatus('There was an error sending your message. Please try again later.');
+          console.error('FAILED...', error.text);
         }
       );
   };
@@ -46,39 +51,32 @@ const ContactForm = () => {
   return (
     <div className="contact-form-container bg-white p-8 shadow-md rounded-lg">
       <h2 className="text-3xl font-bold mb-4 text-center">Contact Me</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form ref={form} onSubmit={sendEmail} className="space-y-4">
         {/* Name Input */}
-        <InputField
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-        />
+        <InputField type="text" name="user_name" placeholder="Your Name" />
 
         {/* Email Input */}
-        <InputField
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Your Email"
-        />
+        <InputField type="email" name="user_email" placeholder="Your Email" />
 
         {/* Message Input */}
-        <TextareaField
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder="Your Message"
-          rows="5"
+        <TextareaField name="message" placeholder="Your Message" rows="5" />
+
+        {/* reCAPTCHA v3 */}
+        <ReCAPTCHA
+          sitekey="6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN" // Replace with your reCAPTCHA v3 Site Key
+          size="invisible"
+          badge="inline"
+          onChange={handleRecaptchaVerify}
         />
 
         {/* Submit Button */}
-        <SendMessage />
-        
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
+        >
+          Send Message
+        </button>
       </form>
-      
 
       {/* Feedback Message */}
       {status && <p className="mt-4 text-center text-lg text-gray-600">{status}</p>}
@@ -87,12 +85,10 @@ const ContactForm = () => {
 };
 
 // Reusable input field component
-const InputField = ({ type, name, value, onChange, placeholder }) => (
+const InputField = ({ type, name, placeholder }) => (
   <input
     type={type}
     name={name}
-    value={value}
-    onChange={onChange}
     className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
     placeholder={placeholder}
     required
@@ -100,11 +96,9 @@ const InputField = ({ type, name, value, onChange, placeholder }) => (
 );
 
 // Reusable textarea field component
-const TextareaField = ({ name, value, onChange, placeholder, rows }) => (
+const TextareaField = ({ name, placeholder, rows }) => (
   <textarea
     name={name}
-    value={value}
-    onChange={onChange}
     className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
     placeholder={placeholder}
     rows={rows}
