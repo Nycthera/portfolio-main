@@ -3,9 +3,10 @@ import { LuTerminal } from "react-icons/lu";
 import { VscVscode } from "react-icons/vsc";
 import { Link } from "react-router-dom"; // Importing Link for navigation
 import { RiNextjsFill } from "react-icons/ri";
-import { FaUnity } from "react-icons/fa6";
+import { FaCloudflare, FaUnity } from "react-icons/fa6";
 import { DiJavascript } from "react-icons/di";
 import { TbBrandFirebase} from "react-icons/tb";
+import {  } from "react-icons/fa";
 const Skills = () => {
   return (
     <section className="skills mb-8 p-6 bg-gradient-to-r from-purple-500 via-indigo-500 to-red-500 rounded-xl shadow-lg">
@@ -138,10 +139,10 @@ const Skills = () => {
         </div>
       </div>
       <div className="relative group">
-        <FaUnity className="icon text-black hover:text-gray-900" />
-        <a href="https://unity.com/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.cloudflare.com/en-gb/" target="_blank" rel="noopener noreferrer">
+        <FaCloudflare className="icon text-cloudflare hover:text-cloudflare" />
         <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full bg-gray-800 text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          Unity
+          Cloudfare
         </span>
         </a>
       </div>
