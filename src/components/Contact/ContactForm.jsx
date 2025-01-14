@@ -1,63 +1,73 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+
+const SITE_KEY = '6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN'; // Your reCAPTCHA site key
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
+
+  // EmailJS configuration
   const ServiceID = "service_7fsl6pc";
   const TemplateID = "template_n3875p2";
   const PublicKey = "NlVboxl_2X5mr9bm1";
 
-  const SITE_KEY = "6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN"; // Replace with your reCAPTCHA v3 Site Key
+  useEffect(() => {
+    // Load the reCAPTCHA script dynamically on component mount
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`;
+    script.async = true;
+    script.onload = () => {
+      console.log('reCAPTCHA script loaded successfully.');
+    };
+    script.onerror = () => {
+      console.error('Error loading reCAPTCHA script.');
+    };
+    document.head.appendChild(script);
+    
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    // Execute reCAPTCHA and get the token
-    const recaptchaToken = await window.grecaptcha.execute(SITE_KEY, { action: "submit" });
-
-    if (!recaptchaToken) {
-      setStatus('Failed to verify reCAPTCHA. Please try again.');
+    if (!window.grecaptcha) {
+      setStatus("reCAPTCHA is not ready. Please refresh the page and try again.");
       return;
     }
 
-    // Append reCAPTCHA token to form data
-    const formData = new FormData(form.current);
-    formData.append('recaptcha_token', recaptchaToken);
+    try {
+      // Execute reCAPTCHA to get the token
+      const recaptchaToken = await window.grecaptcha.execute(SITE_KEY, { action: "submit" });
 
-    // Optional: Validate reCAPTCHA token server-side (recommended)
-    const isValidRecaptcha = await validateRecaptchaToken(recaptchaToken);
-    if (!isValidRecaptcha) {
-      setStatus('reCAPTCHA verification failed. Please try again.');
-      return;
+      if (!recaptchaToken) {
+        setStatus("Failed to verify reCAPTCHA. Please try again.");
+        return;
+      }
+
+      // Append reCAPTCHA token to the form data
+      const formData = new FormData(form.current);
+      formData.append('recaptcha_token', recaptchaToken);
+
+      // Send form data with reCAPTCHA token using EmailJS
+      emailjs
+        .sendForm(ServiceID, TemplateID, form.current, PublicKey)
+        .then(
+          () => {
+            setStatus("Your message has been sent successfully!");
+            form.current.reset(); // Clear the form fields
+          },
+          (error) => {
+            console.error("FAILED...", error.text);
+            setStatus("There was an error sending your message. Please try again later.");
+          }
+        );
+    } catch (err) {
+      console.error("reCAPTCHA execution error:", err);
+      setStatus("An error occurred during reCAPTCHA verification. Please try again.");
     }
-
-    // Send email via EmailJS
-    emailjs
-      .sendForm(ServiceID, TemplateID, form.current, PublicKey)
-      .then(
-        () => {
-          setStatus('Your message has been sent successfully!');
-          form.current.reset(); // Clear the form fields
-        },
-        (error) => {
-          setStatus('There was an error sending your message. Please try again later.');
-          console.error('FAILED...', error.text);
-        }
-      );
-  };
-
-  const validateRecaptchaToken = async (token) => {
-    // Call your backend or Google API to validate the token
-    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `secret=YOUR_SECRET_KEY&response=${token}`,
-    });
-    const data = await response.json();
-    return data.success; // Return true if token is valid
   };
 
   return (
@@ -73,14 +83,8 @@ const ContactForm = () => {
         {/* Message Input */}
         <TextareaField name="message" placeholder="Your Message" rows="5" />
 
-        {/* reCAPTCHA v3 */}
-        <div
-          id="g-recaptcha"
-          data-sitekey={SITE_KEY}
-          data-size="invisible"
-          data-callback="onSubmit"
-          data-action="submit"
-        ></div>
+        {/* reCAPTCHA */}
+        <div className="g-recaptcha" data-sitekey={SITE_KEY}></div>
 
         {/* Submit Button */}
         <button
