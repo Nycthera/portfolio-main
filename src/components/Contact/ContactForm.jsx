@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
@@ -8,24 +7,17 @@ const ContactForm = () => {
   const ServiceID = "service_7fsl6pc";
   const TemplateID = "template_n3875p2";
   const PublicKey = "NlVboxl_2X5mr9bm1";
-  const [recaptchaToken, setRecaptchaToken] = useState(''); // State to store the reCAPTCHA token
 
-  const handleRecaptchaVerify = async () => {
-    try {
-      const recaptcha = await window.grecaptcha.execute("YOUR_SITE_KEY", { action: "submit" });
-      setRecaptchaToken(recaptcha);
-    } catch (error) {
-      console.error('Error executing reCAPTCHA:', error);
-      setStatus('Failed to verify reCAPTCHA. Please try again.');
-    }
-  };
+  const SITE_KEY = "6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN"; // Replace with your reCAPTCHA v3 Site Key
 
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    // Ensure reCAPTCHA token exists
+    // Execute reCAPTCHA and get the token
+    const recaptchaToken = await window.grecaptcha.execute(SITE_KEY, { action: "submit" });
+
     if (!recaptchaToken) {
-      setStatus('Please complete the reCAPTCHA verification.');
+      setStatus('Failed to verify reCAPTCHA. Please try again.');
       return;
     }
 
@@ -33,19 +25,39 @@ const ContactForm = () => {
     const formData = new FormData(form.current);
     formData.append('recaptcha_token', recaptchaToken);
 
+    // Optional: Validate reCAPTCHA token server-side (recommended)
+    const isValidRecaptcha = await validateRecaptchaToken(recaptchaToken);
+    if (!isValidRecaptcha) {
+      setStatus('reCAPTCHA verification failed. Please try again.');
+      return;
+    }
+
+    // Send email via EmailJS
     emailjs
       .sendForm(ServiceID, TemplateID, form.current, PublicKey)
       .then(
         () => {
           setStatus('Your message has been sent successfully!');
           form.current.reset(); // Clear the form fields
-          setRecaptchaToken(''); // Reset reCAPTCHA token
         },
         (error) => {
           setStatus('There was an error sending your message. Please try again later.');
           console.error('FAILED...', error.text);
         }
       );
+  };
+
+  const validateRecaptchaToken = async (token) => {
+    // Call your backend or Google API to validate the token
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=YOUR_SECRET_KEY&response=${token}`,
+    });
+    const data = await response.json();
+    return data.success; // Return true if token is valid
   };
 
   return (
@@ -62,12 +74,13 @@ const ContactForm = () => {
         <TextareaField name="message" placeholder="Your Message" rows="5" />
 
         {/* reCAPTCHA v3 */}
-        <ReCAPTCHA
-          sitekey="6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN" // Replace with your reCAPTCHA v3 Site Key
-          size="invisible"
-          badge="inline"
-          onChange={handleRecaptchaVerify}
-        />
+        <div
+          id="g-recaptcha"
+          data-sitekey={SITE_KEY}
+          data-size="invisible"
+          data-callback="onSubmit"
+          data-action="submit"
+        ></div>
 
         {/* Submit Button */}
         <button
