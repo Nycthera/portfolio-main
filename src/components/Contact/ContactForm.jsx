@@ -1,73 +1,61 @@
 import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 
-const SITE_KEY = '6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN'; // Your reCAPTCHA site key
+// Google reCAPTCHA Site Key
+const SITE_KEY = '6LdbTLcqAAAAADXv_5UhYACnCwxQz6_POIYV32XN'; // Your reCAPTCHA v3 Site Key
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
+  const [recaptchaToken, setRecaptchaToken] = useState(null); // Store reCAPTCHA token
 
-  // EmailJS configuration
   const ServiceID = "service_7fsl6pc";
   const TemplateID = "template_n3875p2";
   const PublicKey = "NlVboxl_2X5mr9bm1";
 
   useEffect(() => {
-    // Load the reCAPTCHA script dynamically on component mount
+    // Load the reCAPTCHA script on component mount
     const script = document.createElement('script');
     script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`;
     script.async = true;
+    document.body.appendChild(script);
+
     script.onload = () => {
-      console.log('reCAPTCHA script loaded successfully.');
-    };
-    script.onerror = () => {
-      console.error('Error loading reCAPTCHA script.');
-    };
-    document.head.appendChild(script);
-    
-    return () => {
-      document.head.removeChild(script);
+      // Execute reCAPTCHA after the script is loaded
+      window.grecaptcha.ready(() => {
+        window.grecaptcha.execute(SITE_KEY, { action: 'submit' }).then((token) => {
+          setRecaptchaToken(token); // Set the token received from reCAPTCHA
+        });
+      });
     };
   }, []);
 
-  const sendEmail = async (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
 
-    if (!window.grecaptcha) {
-      setStatus("reCAPTCHA is not ready. Please refresh the page and try again.");
+    if (!recaptchaToken) {
+      setStatus('Please complete the reCAPTCHA.');
       return;
     }
 
-    try {
-      // Execute reCAPTCHA to get the token
-      const recaptchaToken = await window.grecaptcha.execute(SITE_KEY, { action: "submit" });
-
-      if (!recaptchaToken) {
-        setStatus("Failed to verify reCAPTCHA. Please try again.");
-        return;
-      }
-
-      // Append reCAPTCHA token to the form data
-      const formData = new FormData(form.current);
-      formData.append('recaptcha_token', recaptchaToken);
-
-      // Send form data with reCAPTCHA token using EmailJS
-      emailjs
-        .sendForm(ServiceID, TemplateID, form.current, PublicKey)
-        .then(
-          () => {
-            setStatus("Your message has been sent successfully!");
-            form.current.reset(); // Clear the form fields
-          },
-          (error) => {
-            console.error("FAILED...", error.text);
-            setStatus("There was an error sending your message. Please try again later.");
-          }
-        );
-    } catch (err) {
-      console.error("reCAPTCHA execution error:", err);
-      setStatus("An error occurred during reCAPTCHA verification. Please try again.");
-    }
+    emailjs
+      .sendForm(
+        ServiceID, // Your EmailJS Service ID
+        TemplateID, // Your EmailJS Template ID
+        form.current, // Form reference
+        PublicKey, // Your EmailJS Public Key
+        { 'g-recaptcha-response': recaptchaToken } // Add reCAPTCHA token
+      )
+      .then(
+        () => {
+          setStatus('Your message has been sent successfully!');
+          form.current.reset(); // Clear the form fields
+        },
+        (error) => {
+          setStatus('There was an error sending your message. Please try again later.');
+          console.error('FAILED...', error.text);
+        }
+      );
   };
 
   return (
@@ -82,9 +70,6 @@ const ContactForm = () => {
 
         {/* Message Input */}
         <TextareaField name="message" placeholder="Your Message" rows="5" />
-
-        {/* reCAPTCHA */}
-        <div className="g-recaptcha" data-sitekey={SITE_KEY}></div>
 
         {/* Submit Button */}
         <button
