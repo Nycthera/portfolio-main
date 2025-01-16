@@ -1,38 +1,45 @@
 import React, { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
-
-  const ServiceID = "service_7fsl6pc";
-  const TemplateID = "template_n3875p2";
-  const PublicKey = "NlVboxl_2X5mr9bm1";
-
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
-
-    emailjs
-      .sendForm(
-        ServiceID, // Your EmailJS Service ID
-        TemplateID, // Your EmailJS Template ID
-        form.current, // Form reference
-        PublicKey // Your EmailJS Public Key
-      )
-      .then(
-        () => {
-          setStatus('Your message has been sent successfully!');
-          form.current.reset(); // Clear the form fields
+  
+    const formData = new FormData(form.current);
+  
+    try {
+      const response = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        (error) => {
-          setStatus('There was an error sending your message. Please try again later.');
-          console.error('FAILED...', error.text);
-        }
-      );
+        body: JSON.stringify({
+          user_name: formData.get('user_name'),
+          user_email: formData.get('user_email'),
+          message: formData.get('message'),
+        }),
+      });
+  
+      const result = await response.json().catch(() => ({
+        error: 'Invalid response from the server',
+      }));
+  
+      if (response.ok) {
+        setStatus('Your message has been sent successfully! 😊');
+        form.current.reset();
+      } else {
+        setStatus(result.error || 'Something went wrong. Please try again later. 🚨');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setStatus('Failed to send your message. Please try again later. 🚨');
+    }
   };
+  
 
   return (
-    <div className="contact-form-container bg-white p-8 shadow-md rounded-lg">
+    <div className="contact-form-container bg-white p-8 shadow-md rounded-lg max-w-lg mx-auto">
       <h2 className="text-3xl font-bold mb-4 text-center">Contact Me</h2>
       <form ref={form} onSubmit={sendEmail} className="space-y-4">
         {/* Name Input */}
@@ -47,7 +54,8 @@ const ContactForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white py-3 
+          rounded-lg hover:bg-blue-600 transition"
         >
           Send Message
         </button>
@@ -66,6 +74,7 @@ const InputField = ({ type, name, placeholder }) => (
     name={name}
     className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
     placeholder={placeholder}
+    aria-label={placeholder}
     required
   />
 );
@@ -77,6 +86,7 @@ const TextareaField = ({ name, placeholder, rows }) => (
     className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
     placeholder={placeholder}
     rows={rows}
+    aria-label={placeholder}
     required
   />
 );
