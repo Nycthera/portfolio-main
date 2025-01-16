@@ -5,10 +5,9 @@ const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
 
-  VITE_SERVICE_ID=service_7fsl6pc
-  VITE_TEMPLATE_ID=template_n3875p2
-  VITE_PUBLIC_KEY=NlVboxl_2X5mr9bm1
-  
+  const ServiceID = "service_7fsl6pc";
+  const TemplateID = "template_n3875p2";
+  const PublicKey = "NlVboxl_2X5mr9bm1";
 
   const sendEmail = (e) => {
     e.preventDefault();
