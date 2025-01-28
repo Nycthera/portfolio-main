@@ -38,7 +38,7 @@ const Skills = () => {
           <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full bg-gray-800 text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           JavaScript
           </span>
-          `</a>
+          </a>
         </div>
       </div>
         
