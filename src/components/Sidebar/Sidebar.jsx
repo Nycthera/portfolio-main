@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const menuItems = [
   { english: "Home", chinese: "主页", link: "/" },
@@ -14,7 +15,7 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
-
+  console.log(toggleSidebar);
   return (
     <div
       className={`h-full bg-gray-800 text-white fixed top-0 left-0 z-10 transition-all duration-300 ${
@@ -69,5 +70,12 @@ const SidebarItem = ({ english, chinese, link, isCollapsed }) => {
     </li>
   );
 };
+SidebarItem.propTypes = {
+  english: PropTypes.string.isRequired,
+  chinese: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  isCollapsed: PropTypes.bool.isRequired,
+};
 
 export default Sidebar;
+

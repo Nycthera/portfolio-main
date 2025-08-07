@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const projects = [
   {
@@ -6,66 +6,65 @@ const projects = [
     description: "A Python script that recognizes faces in images and videos.",
     techStack: ["Python", "OpenCV", "Dlib"],
     projectLink: "", // Link to the deployed project
-    repoLink: "https://github.com/dabby12/face-reco", // Link to the GitHub repository
+    repoLink: "https://github.com/dabby12/face-reco",
   },
   {
     title: "Countdown website from 2024 to 2025",
     description:
       "A website that counts down the days, hours, minutes, and seconds to the New Year.",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://countdown-one-iota.vercel.app/", // Link to the deployed project
-    repoLink: "https://github.com/dabby12/countdown", // Link to the GitHub repository
+    projectLink: "https://countdown-one-iota.vercel.app/",
+    repoLink: "https://github.com/dabby12/countdown",
   },
   {
     title: "Weather App",
     description: "A weather forecasting app with real-time data and elegant design.",
     techStack: ["React", "OpenWeather API", "CSS"],
-    projectLink: "https://weather-app-one-gamma-78.vercel.app", // Link to the deployed project
-    repoLink: "https://github.com/dabby12/weather-app", // Link to the GitHub repository
+    projectLink: "https://weather-app-one-gamma-78.vercel.app",
+    repoLink: "https://github.com/dabby12/weather-app",
   },
   {
     title: "Mobile note-taking app",
     description:
-      "A mobile note-taking app that allows users to create, edit, and delete notes. ",
+      "A mobile note-taking app that allows users to create, edit, and delete notes.",
     techStack: ["React Native", "Expo", "AsyncStorage"],
-    projectLink: "", // Link to the deployed project
-    repoLink: "https://github.com/dabby12/react-native-note-app", // Link to the GitHub repository
+    projectLink: "",
+    repoLink: "https://github.com/dabby12/react-native-note-app",
   },
   {
     title: "Portfolio version 3.2",
-    description: "A personal portfolio built with React and Tailwind CSS. ",
+    description: "A personal portfolio built with React and Tailwind CSS.",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://portfolio-ver-3-2.vercel.app/", // Link to the deployed project
+    projectLink: "https://portfolio-ver-3-2.vercel.app/",
     repoLink: "https://github.com/dabby12/portfolio-ver-3.2",
   },
   {
     title: "AI Chatbot website",
     description:
-      "A website with an AI chatbot that answers questions and provides information. ",
+      "A website with an AI chatbot that answers questions and provides information.",
     techStack: ["React", "Node.js", "Gemini API", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://ai-chatbot-pi-silk.vercel.app", // Link to the deployed project
+    projectLink: "https://ai-chatbot-pi-silk.vercel.app",
     repoLink: "https://github.com/dabby12/AI-Chatbot",
   },
   {
     title: "Gradient colour picker",
-    description:
-      "A website that allows the user to pick a gradient colour ",
+    description: "A website that allows the user to pick a gradient colour",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "", // Link to the deployed project
+    projectLink: "",
     repoLink: "https://github.com/dabby12/gradient-colour",
   },
   {
     title: "Task manager website",
     description: "A website that allows the user to create, edit, and delete tasks",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://taskmanger-opal.vercel.app/", // Link to the deployed project
+    projectLink: "https://taskmanger-opal.vercel.app/",
     repoLink: "https://github.com/dabby12/taskmanger",
   },
   {
     title: "Textile waste website",
     description: "A website that talks about the effects of textile waste I made for a school project",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://textile-waste.vercel.app/", // Link to the deployed project
+    projectLink: "https://textile-waste.vercel.app/",
     repoLink: "https://github.com/dabby12/textile-waste",
   },
   {
@@ -73,7 +72,7 @@ const projects = [
     description:
       "A website that when a image is uploaded, it will add 1 point to the score (Note: my classmate asked for this project)",
     techStack: ["React", "Tailwind CSS", "JavaScript"],
-    projectLink: "https://imager-orcin.vercel.app/", // Link to the deployed project
+    projectLink: "https://imager-orcin.vercel.app/",
     repoLink: "https://github.com/dabby12/imager",
   },
 ];
@@ -86,6 +85,8 @@ const ProjectGallery = () => {
     if (!projectLink) {
       setPopupMessage("This project is not deployed yet.");
       setShowPopup(true);
+    } else {
+      window.open(projectLink, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -157,7 +158,7 @@ const ProjectGallery = () => {
       {/* Button to navigate to GitHub or Website */}
       <div className="mt-8 flex justify-center">
         <a
-          href="https://github.com/dabby12"
+          href="https://github.com/nycthera"
           target="_blank"
           rel="noopener noreferrer"
           className="text-lg bg-purple-600 text-white py-3 px-6 rounded-full hover:bg-purple-700 transition-colors duration-300"

@@ -1,5 +1,5 @@
 // src/components/Works/ProjectCard.jsx
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const ProjectCard = ({ title, description, liveLink, repoLink }) => {
   return (
@@ -18,4 +18,14 @@ const ProjectCard = ({ title, description, liveLink, repoLink }) => {
   );
 };
 
+ProjectCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  liveLink: PropTypes.string.isRequired,
+  repoLink: PropTypes.string.isRequired,
+};
+
+
+
 export default ProjectCard;
+

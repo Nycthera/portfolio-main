@@ -1,14 +1,16 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import PropTypes from 'prop-types';
 
 const ContactForm = () => {
   const form = useRef(); // Ref for the form element
   const [status, setStatus] = useState(''); // Feedback message for the user
 
-  const ServiceID = "service_7fsl6pc";
+  const ServiceID = "Portfolio";
   const TemplateID = "template_n3875p2";
   const PublicKey = "NlVboxl_2X5mr9bm1";
-
+  // pls dont kill me -> im js too lazy to add serverless funcs and protect my api keys
+  // EmailJS credentials (replace with your actual values)
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -70,6 +72,8 @@ const InputField = ({ type, name, placeholder }) => (
   />
 );
 
+
+
 // Reusable textarea field component
 const TextareaField = ({ name, placeholder, rows }) => (
   <textarea
@@ -80,5 +84,16 @@ const TextareaField = ({ name, placeholder, rows }) => (
     required
   />
 );
+InputField.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
+
+TextareaField.propTypes = {
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  rows: PropTypes.number.isRequired,
+};
 
 export default ContactForm;
