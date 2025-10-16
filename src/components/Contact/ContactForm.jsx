@@ -11,6 +11,7 @@ const ContactForm = () => {
   const PublicKey = "NlVboxl_2X5mr9bm1";
   // pls dont kill me -> im js too lazy to add serverless funcs and protect my api keys
   // EmailJS credentials (replace with your actual values)
+
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -37,16 +38,10 @@ const ContactForm = () => {
     <div className="contact-form-container bg-white p-8 shadow-md rounded-lg">
       <h2 className="text-3xl font-bold mb-4 text-center">Contact Me</h2>
       <form ref={form} onSubmit={sendEmail} className="space-y-4">
-        {/* Name Input */}
-        <InputField type="text" name="user_name" placeholder="Your Name" />
+        <InputField type="text" name="from_name" placeholder="Your Name" />
+        <InputField type="email" name="from_email" placeholder="Your Email" />
+        <TextareaField name="message" placeholder="Your Message" rows={5} />
 
-        {/* Email Input */}
-        <InputField type="email" name="user_email" placeholder="Your Email" />
-
-        {/* Message Input */}
-        <TextareaField name="message" placeholder="Your Message" rows="5" />
-
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
@@ -54,9 +49,12 @@ const ContactForm = () => {
           Send Message
         </button>
       </form>
-
+      
       {/* Feedback Message */}
       {status && <p className="mt-4 text-center text-lg text-gray-600">{status}</p>}
+      <div className=' text-xs'>
+        This is really random, but whoevers name is &rdquo;Beechong&rdquo;, and submitted my form, pls try again. I fixed the email bug. Thanks also! 
+      </div>
     </div>
   );
 };
