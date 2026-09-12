@@ -1,0 +1,59 @@
+[
+  {
+    "id": "ai-ready-asean",
+    "label": "Certificate of completion",
+    "name": "AI-Ready ASEAN",
+    "issuer": "AI Ready ASEAN",
+    "status": "verified / certificate",
+    "image": "/certImages/ai-ready-asean.png",
+    "alt": "AI-Ready ASEAN certificate for Liu Weimi Chris"
+  },
+  {
+    "id": "hackathon",
+    "label": "Certificate of participation",
+    "name": "Hackathon participation",
+    "issuer": "Liu Weimi Chris",
+    "status": "verified / certificate",
+    "image": "/certImages/hackathon.png",
+    "alt": "Hackathon participation certificate for Liu Weimi Chris"
+  },
+  {
+    "id": "participation",
+    "label": "Certificate of participation",
+    "name": "Participation certificate",
+    "issuer": "Liu Weimi Chris",
+    "status": "verified / certificate",
+    "image": "/certImages/participation.png",
+    "alt": "Participation certificate for Liu Weimi Chris"
+  },
+  {
+    "id": "swift-accelerator-2025",
+    "label": "Class of 2025",
+    "name": "Swift Accelerator graduate",
+    "issuer": "Swift Accelerator",
+    "status": "programme / completed",
+    "image": "/swiftgGradDay.jpg",
+    "alt": "Swift Accelerator class of 2025 graduation day",
+    "href": "https://swiftinsg.org/"
+  },
+  {
+    "id": "skys-the-limit",
+    "label": "Built during Swift Accelerator",
+    "name": "Skys the Limit",
+    "issuer": "iOS app",
+    "status": "published / App Store",
+    "image": "/skysTheLimit.webp",
+    "alt": "Skys the Limit app",
+    "href": "https://apps.apple.com/us/app/skys-the-limit/id6755985934"
+  },
+  {
+    "id": "buildingblocs-anime-js",
+    "label": "December conference 2025",
+    "name": "Anime.js workshop speaker",
+    "issuer": "BuildingBlocs",
+    "status": "community / workshop",
+    "image": "/animejs.webp",
+    "alt": "Anime.js workshop at the BuildingBlocs December conference",
+    "href": "https://buildingblocs.sg/"
+  }
+]
