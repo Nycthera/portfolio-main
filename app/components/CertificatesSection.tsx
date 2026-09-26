@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { certificates } from "../data";
 
@@ -8,41 +10,37 @@ export function CertificatesSection() {
   return (
     <section className="certificate-section section-shell" id="certificates">
       <div className="certificate-intro reveal">
-        <p className="eyebrow">
-          <span>03</span> proof of practice
-        </p>
+        <p className="eyebrow">[ SAVE POINTS ]</p>
         <h2>
-          Credentials,
-          <br />
-          <em>and milestones.</em>
+          PROGRESS<br /><em>SAVED.</em>
         </h2>
         <p>
-          The programmes, products, and rooms where I have learned, built, and
-          shared the work.
+          The programmes, products, and rooms where I learned, built, and
+          shared the work. It fills you with determination.
         </p>
       </div>
       <div className="certificate-stack">
         {formalCertificates.map((certificate, index) => (
-          <div
+          <article
             className={`certificate-card certificate-${index + 1} reveal`}
             key={certificate.name}
           >
             <CertificatePreview certificate={certificate} />
             <CertificateDetails certificate={certificate} index={index} />
-          </div>
+          </article>
         ))}
       </div>
       <div className="milestone-group">
-        <p className="milestone-heading">Selected milestones</p>
+        <p className="milestone-heading">* SELECTED MILESTONES</p>
         <div className="milestone-grid">
           {milestones.map((certificate, index) => (
-            <div
+            <article
               className={`certificate-card achievement-card certificate-${index + 4} reveal`}
               key={certificate.name}
             >
-              <CertificatePreview certificate={certificate} />
+              <CertificatePreview certificate={certificate} isMilestone />
               <CertificateDetails certificate={certificate} index={index + 3} />
-            </div>
+            </article>
           ))}
         </div>
       </div>
@@ -52,20 +50,31 @@ export function CertificatesSection() {
 
 function CertificatePreview({
   certificate,
+  isMilestone = false,
 }: {
   certificate: (typeof certificates)[number];
+  isMilestone?: boolean;
 }) {
   return (
     <div className="certificate-preview">
       {certificate.image ? (
-        <Image
-          src={certificate.image}
-          alt={certificate.alt}
-          fill
-          sizes="(max-width: 800px) 96px, 128px"
-        />
+        <a
+          href={certificate.image}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`View ${certificate.name} image at full size (opens in a new tab)`}
+        >
+          <Image
+            src={certificate.image}
+            alt={certificate.alt}
+            fill
+            sizes={isMilestone
+              ? "(max-width: 800px) calc(100vw - 70px), (max-width: 1240px) 30vw, 352px"
+              : "(max-width: 800px) 80px, 104px"}
+          />
+        </a>
       ) : (
-        <span className="certificate-placeholder">image slot</span>
+        <span className="certificate-placeholder">{certificate.name}</span>
       )}
     </div>
   );

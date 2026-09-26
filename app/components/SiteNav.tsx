@@ -1,25 +1,22 @@
-import { Arrow } from "./Arrow";
-
 export function SiteNav() {
   return (
-    <nav className="site-nav reveal">
+    <nav className="site-nav" aria-label="Main navigation">
       <a className="wordmark" href="#top">
-        N<span>/</span>YCTHERA
+        <span aria-hidden="true">♥</span> NYCTHERA
       </a>
       <div className="nav-links">
-        <a href="#work">
-          work <span>01</span>
-        </a>
-        <a href="#certificates">
-          certificates <span>02</span>
-        </a>
-        <a href="https://github.com/Nycthera" target="_blank" rel="noreferrer">
-          github <Arrow />
-        </a>
+        <a href="#work">Projects</a>
+        <a href="#music">Music</a>
+        <a href="#certificates">Save points</a>
       </div>
-      <span className="nav-status">
-        <i className="pulse-dot" /> available for a good idea
-      </span>
+      <a
+        className="nav-status"
+        href="https://github.com/Nycthera"
+        target="_blank"
+        rel="noreferrer"
+      >
+        GitHub ↗
+      </a>
     </nav>
   );
 }

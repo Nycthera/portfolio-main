@@ -4,13 +4,9 @@ export function SiteFooter() {
   return (
     <footer className="site-footer section-shell reveal">
       <div>
-        <p className="eyebrow">
-          <span>04</span> end of transmission
-        </p>
+        <p className="eyebrow">[ THE END...? ]</p>
         <h2>
-          Let&apos;s make the
-          <br />
-          <em>next thing.</em>
+          LET&apos;S BUILD<br /><em>SOMETHING.</em>
         </h2>
       </div>
       <div className="footer-right">
@@ -20,12 +16,12 @@ export function SiteFooter() {
           target="_blank"
           rel="noreferrer"
         >
-          Say hello on GitHub <Arrow />
+          * SAY HELLO <Arrow />
         </a>
         <p>
           © 2026 Nycthera
           <br />
-          Built with curiosity.
+          Built with determination.
         </p>
       </div>
     </footer>

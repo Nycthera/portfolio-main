@@ -1,9 +1,8 @@
 export function MarqueeBand() {
   const sequence = (
     <>
-      REACT <span>✳</span> TAILWIND <span>✳</span> REACT NATIVE <span>✳</span>{" "}
-      NEXT.JS <span>✳</span> VUE <span>✳</span> REACT <span>✳</span> TAILWIND{" "}
-      <span>✳</span> REACT NATIVE <span>✳</span>
+      REACT <span>♥</span> NEXT.JS <span>♥</span> TYPESCRIPT <span>♥</span>{" "}
+      TAILWIND <span>♥</span> REACT NATIVE <span>♥</span> VUE <span>♥</span>{" "}
     </>
   );
 
